@@ -2,7 +2,6 @@ name: PR Author dynamic Checklist
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
 
 jobs:
   checklist:
