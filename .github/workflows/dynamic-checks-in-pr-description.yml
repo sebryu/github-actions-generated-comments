@@ -1,16 +1,15 @@
+name: PR Author dynamic Checklist
+
 on:
   pull_request:
+    types: [opened, edited, reopened]
 
 jobs:
-  update-pr-description:
+  checklist:
     runs-on: ubuntu-latest
+    if: github.actor != 'OSBotify'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Add dynamic checks in PR description
-        uses: nefrob/pr-description@v1.0.0
+      - name: dynamicChecksInPrDescription.js
+        uses: Expensify/App/.github/actions/javascript/dynamicChecksInPrDescription@main
         with:
-          content: "<!-- start regex match -->I am new content!<!-- end regex match -->"
-          regex: "<!-- start regex match -->.*?<!-- end regex match -->"
-          regexFlags: ims
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
