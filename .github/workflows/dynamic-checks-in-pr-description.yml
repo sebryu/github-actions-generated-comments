@@ -10,6 +10,6 @@ jobs:
     if: github.actor != 'OSBotify'
     steps:
       - name: dynamicChecksInPrDescription.js
-        uses: Expensify/App/.github/actions/javascript/dynamicChecksInPrDescription@main
+        uses: sebryu/github-actions-generated-comments/.github/actions/javascript/dynamicChecksInPrDescription@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
