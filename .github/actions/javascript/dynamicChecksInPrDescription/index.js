@@ -9837,7 +9837,7 @@ function getDynamicChecksContent() {
 }
 
 async function run() {
-  const token = core.getInput('token', { required: true });
+  const token = core.getInput('GITHUB_TOKEN', { required: true });
 
   const [repoOwner, repoName] = process.env.GITHUB_REPOSITORY.split('/');
   const prNumber = github.context.payload.pull_request.number;
