@@ -1,0 +1,16 @@
+on:
+  pull_request:
+
+jobs:
+  update-pr-description:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Add dynamic checks in PR description
+        uses: nefrob/pr-description@v1.0.0
+        with:
+          content: "<!-- start regex match -->I am new content!<!-- end regex match -->"
+          regex: "<!-- start regex match -->.*?<!-- end regex match -->"
+          regexFlags: ims
+          token: ${{ secrets.GITHUB_TOKEN }}
