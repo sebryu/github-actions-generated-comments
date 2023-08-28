@@ -2,7 +2,7 @@ name: 'Author Dynamic Checklist'
 description: 'Adds dynamic checkings to PR description'
 inputs:
   GITHUB_TOKEN:
-    description: Auth token for New Expensify Github
+    description: Auth token for Testing Github action
     required: true
 runs:
   using: 'node16'
