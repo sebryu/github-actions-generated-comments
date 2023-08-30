@@ -1,1 +1,1 @@
-[ ] I'm added to PR description dynamicaly when code contains .ts changes
+- [ ] I'm added to PR description dynamicaly when code contains .ts changes
