@@ -31,10 +31,12 @@ async function run() {
   const baseSha = github.context.payload.pull_request.base.sha;
   const sha = github.sha;
   const execResponse = await exec(`git diff --name-only --diff-filter=ACMRT ${baseSha} ${sha}`);
-  const changedFiles = execResponse.stdout.split('\n');
-  const hasTsFiles = changedFiles.some((file) => file.endsWith('.ts'));
-  console.log('Changed files:', changedFiles);
-  console.log('Has ts files:', hasTsFiles);
+  console.log('Exec response stdout:', execResponse.stdout);
+  console.log('Exec response:', execResponse);
+  // const changedFiles = execResponse.stdout.split('\n');
+  // const hasTsFiles = changedFiles.some((file) => file.endsWith('.ts'));
+  // console.log('Changed files:', changedFiles);
+  // console.log('Has ts files:', hasTsFiles);
 
   const [repoOwner, repoName] = process.env.GITHUB_REPOSITORY.split('/');
   const prNumber = github.context.payload.pull_request.number;
