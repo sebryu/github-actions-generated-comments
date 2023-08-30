@@ -9650,6 +9650,14 @@ module.exports = require("assert");
 
 /***/ }),
 
+/***/ 2081:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");
+
+/***/ }),
+
 /***/ 6113:
 /***/ ((module) => {
 
@@ -9814,6 +9822,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const https = __nccwpck_require__(5687);
+const exec = (__nccwpck_require__(2081).exec);
 const PATH_TO_DYNAMIC_CHECKS = 'https://raw.githubusercontent.com/sebryu/github-actions-generated-comments/main/PULL_REQUEST_DYNAMIC_CHECKS.md';
 
 
@@ -9840,6 +9849,14 @@ function getDynamicChecksContent() {
 async function run() {
   const token = core.getInput('GITHUB_TOKEN', { required: true });
 
+  const baseSha = github.context.payload.pull_request.base.sha;
+  const sha = github.sha;
+  const execResponse = await exec(`git diff --name-only --diff-filter=ACMRT ${baseSha} ${sha}`);
+  const changedFiles = execResponse.stdout.split('\n');
+  const hasTsFiles = changedFiles.some((file) => file.endsWith('.ts'));
+  console.log('Changed files:', changedFiles);
+  console.log('Has ts files:', hasTsFiles);
+
   const [repoOwner, repoName] = process.env.GITHUB_REPOSITORY.split('/');
   const prNumber = github.context.payload.pull_request.number;
 
@@ -9856,6 +9873,12 @@ async function run() {
   body = data.body;
 
   const dynamicChecksContent = await getDynamicChecksContent();
+
+  // check if body already contains this dynamic section (i.e PR has been updated)
+  if (body.includes(dynamicChecksContent)) {
+    console.log('Pull request already contains dynamic checks section');
+    return;
+  }
 
   body += dynamicChecksContent;
 
